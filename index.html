@@ -3,16 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Word Speller</title>
-  <script type="module" crossorigin src="/assets/index-BsqI8G9p.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-Cxbkf6X7.css">
+  
+  <!-- Primary Meta Tags -->
+  <title>Spell It - Free Word Spelling Tool with Voice & Language Options</title>
+  <meta name="title" content="Spell It - Free Word Spelling Tool with Voice & Language Options" />
+  <meta name="description" content="A simple, free word spelling app. Enter any word and hear it spelled out letter by letter. Choose between male or female voices and multiple languages. Perfect for learning, pronunciation practice, and accessibility." />
+  <meta name="keywords" content="word spelling, spell words, pronunciation, text to speech, spelling tool, word speller, learn spelling, spell checker, voice spelling" />
+  <meta name="author" content="Spell It" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="English" />
+  <link rel="canonical" href="https://donpui.github.io/spell-it/" />
+  
+  <!-- Security & Privacy -->
+  <!-- CSP: Allow localhost for dev server (WebSocket HMR), strict for production -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' ws://localhost:* http://localhost:*; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://donpui.github.io/spell-it/" />
+  <meta property="og:title" content="Spell It - Free Word Spelling Tool with Voice & Language Options" />
+  <meta property="og:description" content="A simple, free word spelling app. Enter any word and hear it spelled out letter by letter. Choose between male or female voices and multiple languages." />
+  <meta property="og:site_name" content="Spell It" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://donpui.github.io/spell-it/" />
+  <meta property="twitter:title" content="Spell It - Free Word Spelling Tool with Voice & Language Options" />
+  <meta property="twitter:description" content="A simple, free word spelling app. Enter any word and hear it spelled out letter by letter. Choose between male or female voices and multiple languages." />
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#007bff" />
+  <meta name="msapplication-TileColor" content="#007bff" />
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Spell It",
+    "description": "A simple word spelling app with voice selection, language options, and dark mode support. Enter any word and hear it spelled out letter by letter.",
+    "url": "https://donpui.github.io/spell-it/",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Letter-by-letter word spelling",
+      "Male and female voice options",
+      "Multiple language support",
+      "Dark mode support",
+      "Free to use"
+    ]
+  }
+  </script>
+  
+  <script type="module" crossorigin src="/assets/index-DDfpcVJx.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CG_LPPXs.css">
 </head>
 <body>
   <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
     <svg class="theme-icon moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
     </svg>
-    <svg class="theme-icon sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+    <svg class="theme-icon sun-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -29,12 +86,15 @@
     <div class="logo">Spell It</div>
     
     <div class="search-container">
+      <label for="wordInput" class="sr-only">Enter a word to spell</label>
       <input 
         type="text" 
         id="wordInput" 
         class="search-box" 
         placeholder="Enter a word to spell" 
         autocomplete="off"
+        aria-label="Enter a word to spell"
+        maxlength="64"
       />
     </div>
 
@@ -48,8 +108,8 @@
       </div>
       
       <div class="option-group">
-        <span class="option-label">Language:</span>
-        <select id="languageSelect" class="language-select">
+        <label for="languageSelect" class="option-label">Language:</label>
+        <select id="languageSelect" class="language-select" aria-label="Select language for spelling">
           <option value="">Auto (system default)</option>
         </select>
       </div>
@@ -60,6 +120,17 @@
       <button class="search-button" id="stopBtn">Stop</button>
     </div>
   </div>
+
+  <footer class="privacy-footer">
+    <span class="privacy-badge">🔒 No Tracking</span>
+    <span class="privacy-badge">🛡️ Privacy Friendly</span>
+    <a href="https://github.com/donpui/spell-it" target="_blank" rel="noopener noreferrer" class="github-link" title="View on GitHub">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+      </svg>
+      <span>GitHub</span>
+    </a>
+  </footer>
 
 </body>
 </html>
