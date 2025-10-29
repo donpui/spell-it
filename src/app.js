@@ -11,6 +11,16 @@ let voices = [];
 let selectedLang = '';
 let speechTimeouts = [];
 
+// Sanitize user input: trim, remove control characters, and cap length
+function sanitizeInput(rawValue) {
+  if (typeof rawValue !== 'string') return '';
+  const trimmed = rawValue.trim();
+  // Remove ASCII control chars and DEL
+  const withoutControls = trimmed.replace(/[\u0000-\u001F\u007F]/g, '');
+  // Cap to 64 characters to avoid abuse
+  return withoutControls.slice(0, 64);
+}
+
 // Dark mode functionality
 function initTheme() {
   const savedTheme = localStorage.getItem('theme') || 'light';
@@ -34,11 +44,11 @@ function updateThemeIcon(theme) {
     const sunIcon = themeToggle.querySelector('.sun-icon');
     if (moonIcon && sunIcon) {
       if (theme === 'dark') {
-        moonIcon.style.display = 'none';
-        sunIcon.style.display = 'block';
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
       } else {
-        moonIcon.style.display = 'block';
-        sunIcon.style.display = 'none';
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
       }
     }
   }
@@ -278,7 +288,7 @@ languageSelect.addEventListener('change', () => {
 });
 
 button.addEventListener('click', () => {
-  const word = input.value.trim();
+  const word = sanitizeInput(input.value);
   if (word) spellWord(word);
 });
 

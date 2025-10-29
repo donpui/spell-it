@@ -14,6 +14,11 @@
   <meta name="language" content="English" />
   <link rel="canonical" href="https://donpui.github.io/spell-it/" />
   
+  <!-- Security & Privacy -->
+  <!-- CSP: Allow localhost for dev server (WebSocket HMR), strict for production -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' ws://localhost:* http://localhost:*; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer" />
+  
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://donpui.github.io/spell-it/" />
@@ -63,7 +68,7 @@
     <svg class="theme-icon moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
     </svg>
-    <svg class="theme-icon sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+    <svg class="theme-icon sun-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -88,6 +93,7 @@
         placeholder="Enter a word to spell" 
         autocomplete="off"
         aria-label="Enter a word to spell"
+        maxlength="64"
       />
     </div>
 
@@ -117,6 +123,12 @@
   <footer class="privacy-footer">
     <span class="privacy-badge">🔒 No Tracking</span>
     <span class="privacy-badge">🛡️ Privacy Friendly</span>
+    <a href="https://github.com/donpui/spell-it" target="_blank" rel="noopener noreferrer" class="github-link" title="View on GitHub">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+      </svg>
+      <span>GitHub</span>
+    </a>
   </footer>
 
   <script type="module" src="./app.js"></script>
