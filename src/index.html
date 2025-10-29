@@ -61,6 +61,10 @@
   }
   </script>
   
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="apple-touch-icon" href="./favicon.svg" />
+  
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -98,6 +102,14 @@
     </div>
 
     <div class="options-container">
+      <div class="option-group">
+        <span class="option-label">Mode:</span>
+        <div class="mode-buttons">
+          <button class="mode-btn" id="fullMode" title="Full Mode - Spell everything including symbols">Full</button>
+          <button class="mode-btn active" id="minimalMode" title="Minimal Mode - Convert to lowercase, ignore symbols">Minimal</button>
+        </div>
+      </div>
+      
       <div class="option-group">
         <span class="option-label">Voice:</span>
         <div class="voice-buttons">

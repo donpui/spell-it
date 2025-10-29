@@ -180,6 +180,41 @@ html[data-theme="dark"] .logo {
   color: var(--secondary-text);
 }
 
+.mode-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.mode-btn {
+  padding: 6px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.mode-btn:hover {
+  background: var(--hover-bg);
+  border-color: var(--border-color);
+}
+
+.mode-btn.active {
+  background: #5f6368;
+  border-color: #5f6368;
+  color: white;
+}
+
+html[data-theme="dark"] .mode-btn.active {
+  background: #9aa0a6;
+  border-color: #9aa0a6;
+  color: #202124;
+}
+
 .voice-buttons {
   display: flex;
   gap: 8px;
@@ -205,14 +240,14 @@ html[data-theme="dark"] .logo {
 }
 
 .voice-btn.active {
-  background: #4285f4;
-  border-color: #4285f4;
+  background: #5f6368;
+  border-color: #5f6368;
   color: white;
 }
 
 html[data-theme="dark"] .voice-btn.active {
-  background: #8ab4f8;
-  border-color: #8ab4f8;
+  background: #9aa0a6;
+  border-color: #9aa0a6;
   color: #202124;
 }
 

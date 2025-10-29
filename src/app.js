@@ -5,11 +5,14 @@ const manVoiceBtn = document.getElementById('manVoice');
 const womanVoiceBtn = document.getElementById('womanVoice');
 const languageSelect = document.getElementById('languageSelect');
 const themeToggle = document.getElementById('themeToggle');
+const fullModeBtn = document.getElementById('fullMode');
+const minimalModeBtn = document.getElementById('minimalMode');
 
 let selectedVoice = 'man'; // default to man voice
 let voices = [];
 let selectedLang = '';
 let speechTimeouts = [];
+let spellingMode = 'minimal'; // 'full' or 'minimal'
 
 // Sanitize user input: trim, remove control characters, and cap length
 function sanitizeInput(rawValue) {
@@ -19,6 +22,17 @@ function sanitizeInput(rawValue) {
   const withoutControls = trimmed.replace(/[\u0000-\u001F\u007F]/g, '');
   // Cap to 64 characters to avoid abuse
   return withoutControls.slice(0, 64);
+}
+
+// Process input based on mode: minimal mode converts to lowercase and removes symbols
+function processInputForSpelling(text, mode) {
+  if (mode === 'minimal') {
+    // Convert to lowercase, keep only letters and spaces
+    return text.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+  } else {
+    // Full mode: keep everything (already sanitized)
+    return text;
+  }
 }
 
 // Dark mode functionality
@@ -120,7 +134,7 @@ function populateLanguageOptions() {
   if (selectedLang) languageSelect.value = selectedLang;
 }
 
-// Create human-friendly label for locale like "English (United States) — en-US"
+// Create human-friendly label for locale like "English (United States)"
 function formatLocaleLabel(locale) {
   try {
     const [lang, region] = locale.split(/[-_]/);
@@ -129,7 +143,7 @@ function formatLocaleLabel(locale) {
     const langName = languageDisplay.of(lang) || lang;
     const regionName = region ? regionDisplay.of(region.toUpperCase()) : '';
     const pretty = regionName ? `${capitalize(langName)} (${regionName})` : capitalize(langName);
-    return `${pretty} — ${locale}`;
+    return pretty;
   } catch {
     return locale;
   }
@@ -237,16 +251,27 @@ function spellWord(word) {
   // Stop any ongoing speech first
   stopSpeech();
   
-  const letters = word.split('');
+  // Process input based on mode
+  const processedText = processInputForSpelling(word, spellingMode);
   const voice = getVoice();
   
   // Debug: log selected voice and voice being used
   console.log('Selected voice type:', selectedVoice);
   console.log('Voice being used:', voice ? voice.name : 'none');
+  console.log('Spelling mode:', spellingMode);
   
   let delay = 0;
-  letters.forEach(letter => {
-    const utterance = new SpeechSynthesisUtterance(letter);
+  const characters = processedText.split('');
+  
+  characters.forEach(char => {
+    // Handle spaces with a pause
+    if (char === ' ') {
+      // Add extra delay for space (pause)
+      delay += 500; // Small pause for space
+      return;
+    }
+    
+    const utterance = new SpeechSynthesisUtterance(char);
     utterance.rate = 0.8;
     
     // Always set the voice if we have one
@@ -267,7 +292,7 @@ function spellWord(word) {
       speechSynthesis.speak(utterance);
     }, delay);
     speechTimeouts.push(timeout);
-    delay += 700;
+    delay += 700; // Delay between letters
   });
 }
 
@@ -286,6 +311,23 @@ womanVoiceBtn.addEventListener('click', () => {
 languageSelect.addEventListener('change', () => {
   selectedLang = languageSelect.value;
 });
+
+// Mode toggle handlers
+if (fullModeBtn) {
+  fullModeBtn.addEventListener('click', () => {
+    spellingMode = 'full';
+    fullModeBtn.classList.add('active');
+    minimalModeBtn.classList.remove('active');
+  });
+}
+
+if (minimalModeBtn) {
+  minimalModeBtn.addEventListener('click', () => {
+    spellingMode = 'minimal';
+    minimalModeBtn.classList.add('active');
+    fullModeBtn.classList.remove('active');
+  });
+}
 
 button.addEventListener('click', () => {
   const word = sanitizeInput(input.value);
