@@ -214,21 +214,44 @@ function getVoice() {
   // Use first voice that's not the opposite gender
   if (oppositeGenderFiltered.length > 0) return oppositeGenderFiltered[0];
   
-  // Last resort: try to use different voice indices to get different voices
-  // Often systems have multiple voices, and different indices might be different genders
-  if (langFiltered.length > 0) {
-    // Try to use different voice indices based on selection
-    // If man selected, try first voice; if woman, try a later voice
-    if (selectedVoice === 'man' && langFiltered.length > 0) {
-      return langFiltered[0];
-    } else if (selectedVoice === 'woman' && langFiltered.length > 1) {
-      // Use a different voice index for woman
-      const womanIndex = Math.min(1, langFiltered.length - 1);
-      return langFiltered[womanIndex];
+  // If no voices match the gender preference after filtering, try searching broader language scope
+  if (selectedLang && voices.length > 0) {
+    const langCode = selectedLang.split('-')[0]; // e.g., 'en' from 'en-AU'
+    
+    // First try: same language family (e.g., en-US, en-GB if en-AU selected)
+    const sameLangFamily = voices.filter(v => {
+      if (!v.lang.startsWith(langCode + '-')) return false;
+      const name = v.name.toLowerCase();
+      if (selectedVoice === 'man') {
+        return !femaleNames.some(femaleName => name.includes(femaleName));
+      } else {
+        return !maleNames.some(maleName => name.includes(maleName));
+      }
+    });
+    
+    if (sameLangFamily.length > 0) {
+      return sameLangFamily[0];
     }
-    return langFiltered[0];
+    
+    // Second try: any language with matching gender
+    const allFilteredByGender = voices.filter(v => {
+      const name = v.name.toLowerCase();
+      if (selectedVoice === 'man') {
+        return !femaleNames.some(femaleName => name.includes(femaleName));
+      } else {
+        return !maleNames.some(maleName => name.includes(maleName));
+      }
+    });
+    
+    if (allFilteredByGender.length > 0) {
+      return allFilteredByGender[0];
+    }
   }
-  return voices[0];
+  
+  // Last resort: if still nothing matching gender, don't use opposite gender voice
+  // Return null to let browser use its default, or the first non-excluded voice if needed
+  // This prevents explicitly using Karen when man is selected
+  return null;
 }
 
 function stopSpeech() {
@@ -272,7 +295,13 @@ function spellWord(word) {
     }
     
     const utterance = new SpeechSynthesisUtterance(char);
-    utterance.rate = 0.8;
+    
+    // Adjust rate: slower for woman voice
+    // if (selectedVoice === 'woman') {
+    //   utterance.rate = 1; // Slower rate for female voice
+    // } else {
+    //   utterance.rate = 0.8; // Normal rate for male voice
+    // }
     
     // Always set the voice if we have one
     if (voice) {
