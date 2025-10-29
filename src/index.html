@@ -3,7 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Word Speller</title>
+  
+  <!-- Primary Meta Tags -->
+  <title>Spell It - Free Word Spelling Tool with Voice & Language Options</title>
+  <meta name="title" content="Spell It - Free Word Spelling Tool with Voice & Language Options" />
+  <meta name="description" content="A simple, free word spelling app. Enter any word and hear it spelled out letter by letter. Choose between male or female voices and multiple languages. Perfect for learning, pronunciation practice, and accessibility." />
+  <meta name="keywords" content="word spelling, spell words, pronunciation, text to speech, spelling tool, word speller, learn spelling, spell checker, voice spelling" />
+  <meta name="author" content="Spell It" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="English" />
+  <link rel="canonical" href="https://donpui.github.io/spell-it/" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://donpui.github.io/spell-it/" />
+  <meta property="og:title" content="Spell It - Free Word Spelling Tool with Voice & Language Options" />
+  <meta property="og:description" content="A simple, free word spelling app. Enter any word and hear it spelled out letter by letter. Choose between male or female voices and multiple languages." />
+  <meta property="og:site_name" content="Spell It" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://donpui.github.io/spell-it/" />
+  <meta property="twitter:title" content="Spell It - Free Word Spelling Tool with Voice & Language Options" />
+  <meta property="twitter:description" content="A simple, free word spelling app. Enter any word and hear it spelled out letter by letter. Choose between male or female voices and multiple languages." />
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#007bff" />
+  <meta name="msapplication-TileColor" content="#007bff" />
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Spell It",
+    "description": "A simple word spelling app with voice selection, language options, and dark mode support. Enter any word and hear it spelled out letter by letter.",
+    "url": "https://donpui.github.io/spell-it/",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Letter-by-letter word spelling",
+      "Male and female voice options",
+      "Multiple language support",
+      "Dark mode support",
+      "Free to use"
+    ]
+  }
+  </script>
+  
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -28,12 +80,14 @@
     <div class="logo">Spell It</div>
     
     <div class="search-container">
+      <label for="wordInput" class="sr-only">Enter a word to spell</label>
       <input 
         type="text" 
         id="wordInput" 
         class="search-box" 
         placeholder="Enter a word to spell" 
         autocomplete="off"
+        aria-label="Enter a word to spell"
       />
     </div>
 
@@ -47,8 +101,8 @@
       </div>
       
       <div class="option-group">
-        <span class="option-label">Language:</span>
-        <select id="languageSelect" class="language-select">
+        <label for="languageSelect" class="option-label">Language:</label>
+        <select id="languageSelect" class="language-select" aria-label="Select language for spelling">
           <option value="">Auto (system default)</option>
         </select>
       </div>
@@ -59,6 +113,11 @@
       <button class="search-button" id="stopBtn">Stop</button>
     </div>
   </div>
+
+  <footer class="privacy-footer">
+    <span class="privacy-badge">🔒 No Tracking</span>
+    <span class="privacy-badge">🛡️ Privacy Friendly</span>
+  </footer>
 
   <script type="module" src="./app.js"></script>
 </body>

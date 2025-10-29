@@ -28,6 +28,19 @@ html[data-theme="dark"] {
   box-sizing: border-box;
 }
 
+/* Screen reader only - visually hide but keep accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 body {
   font-family: arial, sans-serif;
   background: var(--bg-color);
@@ -273,6 +286,34 @@ html[data-theme="dark"] #speakBtn:hover {
   border: 1px solid #4c89fe;
 }
 
+.privacy-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px;
+  margin-top: auto;
+  font-size: 11px;
+  color: var(--secondary-text);
+}
+
+.privacy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  font-size: 11px;
+  color: var(--secondary-text);
+  white-space: nowrap;
+}
+
+html[data-theme="dark"] .privacy-badge {
+  background: var(--button-bg);
+}
+
 @media (max-width: 600px) {
   .logo {
     font-size: 64px;
@@ -281,6 +322,17 @@ html[data-theme="dark"] #speakBtn:hover {
   .options-container {
     flex-direction: column;
     align-items: flex-start;
+  }
+  
+  .privacy-footer {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 20px;
+  }
+  
+  .privacy-badge {
+    font-size: 10px;
+    padding: 3px 6px;
   }
 }
 
