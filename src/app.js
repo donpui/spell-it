@@ -90,7 +90,7 @@ function populateLanguageOptions() {
   // Set English (United States) as default if not already set
   if (!selectedLang) {
     const lowerLangs = langs.map(l => l.toLowerCase());
-    const preferredOrder = ['en-us', 'en-gb'];
+    const preferredOrder = ['en-gb', 'en-us'];
     let chosen = '';
     for (const pref of preferredOrder) {
       const idx = lowerLangs.indexOf(pref);
@@ -248,9 +248,9 @@ function spellWord(word) {
     
     // Adjust pitch for gender difference (default pitch is 1.0)
     if (selectedVoice === 'man') {
-      utterance.pitch = 0.7; // Lower pitch for male voice
+      utterance.pitch = 1; // Lower pitch for male voice
     } else {
-      utterance.pitch = 1.3; // Higher pitch for female voice
+      utterance.pitch = 1; // Higher pitch for female voice
     }
     
     const timeout = setTimeout(() => {

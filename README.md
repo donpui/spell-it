@@ -45,3 +45,19 @@ bun run preview
 npm run preview
 ```
 
+## Deployment
+
+Deploy to GitHub Pages:
+```bash
+bun run deploy
+# or
+npm run deploy
+```
+
+This will:
+- Build the project for production
+- Deploy the `dist/` folder to the `gh-pages` branch
+- Make the site available at `https://donpui.github.io/spell-it/`
+
+**Note:** Make sure GitHub Pages is enabled in your repository settings and set to use the `gh-pages` branch.
+
